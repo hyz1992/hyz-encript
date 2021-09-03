@@ -1,0 +1,23 @@
+h2 {
+    color: #f90;
+    font-size: 15px;
+    width: 680px;
+    text-align: center
+}
+.middle {
+    width: 600px;
+    align-items: center;
+}
+.inputstyle {
+    width: 600px;
+}
+.okstyle {
+    margin-top: 20px;
+    margin-left: 300px;
+    width: 100px;
+    color: #f90;
+    text-align: center;
+}
+.selectstyle {
+    width: 200px;
+}

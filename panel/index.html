@@ -1,0 +1,34 @@
+<!-- <link rel="stylesheet" type="text/css" href="index.css" /> -->
+
+<div class="layout vertical" > 
+    <h2>配置面板</h2>
+</div>
+<hr />
+
+<div class="layout vertical" > 
+    <h3>构建目录</h3>
+    <ui-input id="input_buildFloder" placeholder="E:/tmp/xxx/jsb-link" class="inputstyle"></ui-input>
+</div>
+
+<div class="layout vertical">
+    <h3>密钥</h3> 
+    <ui-input id="input_encriptKey" placeholder="aszxsdxzwwdasde" class="inputstyle"></ui-input>
+</div>
+<div class="layout vertical">
+    <h3>排除</h3> 
+    <ui-input id="input_excludeList" placeholder="需要排除的文件后缀，以英文字符‘;’隔开，比如 .json;.zip;.bin" class="inputstyle" ></ui-input>
+</div> 
+<!-- <div class="layout vertical">
+    <h3>游戏类型</h3>
+    <ui-select value="0" class="selectstyle" v-on:change="onBuildTypeChange" v-value="buildTypeSelect" id="buildType">
+        <option value="0">Mobile</option>
+        <option value="1">WechatGame</option>
+    </ui-select>
+</div>  -->
+
+<hr />
+
+<div class="layout vertical" > 
+    <ui-button class="okstyle" id='btn' v-on:confirm="oDoEncrypt">加密</ui-button>
+</div>
+
