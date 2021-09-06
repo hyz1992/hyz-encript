@@ -11,17 +11,9 @@ module.exports = {
 
   // register your ipc messages here
   messages: {
-    'open' () {
-      // open entry panel registered in package.json
+    'showPanel' () {
       Editor.Panel.open('hyz-encript');
+      Editor.log('欢迎使用hyz-encript');
     },
-    'say-hello' () {
-      Editor.log('Hello World!');
-      // send ipc message to panel
-      Editor.Ipc.sendToPanel('hyz-encript', 'hyz-encript:hello');
-    },
-    'clicked' () {
-      Editor.log('Button clicked!');
-    }
   },
 };
