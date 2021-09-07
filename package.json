@@ -5,11 +5,8 @@
   "author": "Cocos Creator",
   "main": "main.js",
   "main-menu": {
-    "i18n:MAIN_MENU.package.title/hyz-encript/open": {
-      "message": "hyz-encript:open"
-    },
-    "i18n:MAIN_MENU.package.title/hyz-encript/hello": {
-      "message": "hyz-encript:say-hello"
+    "i18n:MAIN_MENU.package.title/hyz-encript": {
+      "message": "hyz-encript:showPanel"
     }
   },
   "panel": {
@@ -17,10 +14,10 @@
     "type": "dockable",
     "title": "hyz-encript",
     "width": 680,
-    "height": 450,
+    "height": 520,
     "min-width": 680,
-    "min-height": 450,
+    "min-height": 520,
     "max-width": 680,
-    "max-height": 450
+    "max-height": 520
   }
 }

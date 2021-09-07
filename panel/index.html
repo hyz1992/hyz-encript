@@ -7,24 +7,25 @@
 
 <div class="layout vertical" > 
     <h3>构建目录</h3>
-    <ui-input id="input_buildFloder" placeholder="E:/tmp/xxx/jsb-link" class="inputstyle"></ui-input>
+    <ui-input id="input_buildFloder" placeholder="输入jsb-link地址 如：E:/tmp/xxx/jsb-link" class="inputstyle"></ui-input>
 </div>
 
 <div class="layout vertical">
-    <h3>密钥</h3> 
-    <ui-input id="input_encriptKey" placeholder="aszxsdxzwwdasde" class="inputstyle"></ui-input>
+    <h3>加密签名</h3> 
+    <ui-input id="input_encriptSign" placeholder="加密签名 如：my_cocos_sign_123" class="inputstyle"></ui-input>
 </div>
 <div class="layout vertical">
-    <h3>排除</h3> 
-    <ui-input id="input_excludeList" placeholder="需要排除的文件后缀，以英文字符‘;’隔开，比如 .json;.zip;.bin" class="inputstyle" ></ui-input>
+    <h3>加密密钥</h3> 
+    <ui-input id="input_encriptKey" placeholder="加密秘钥 如：my_cocos_key_456" class="inputstyle"></ui-input>
+</div>
+<div class="layout vertical">
+    <h3>文件名混淆签名</h3> 
+    <ui-input id="input_changeNameSign" placeholder="文件名混淆签名 可不填" class="inputstyle"></ui-input>
+</div>
+<div class="layout vertical">
+    <h3>加密排除后缀</h3> 
+    <ui-input id="input_excludeList" placeholder="需要排除的文件后缀，以英文逗号‘,’隔开，比如 .json;.zip;.bin" class="inputstyle" ></ui-input>
 </div> 
-<!-- <div class="layout vertical">
-    <h3>游戏类型</h3>
-    <ui-select value="0" class="selectstyle" v-on:change="onBuildTypeChange" v-value="buildTypeSelect" id="buildType">
-        <option value="0">Mobile</option>
-        <option value="1">WechatGame</option>
-    </ui-select>
-</div>  -->
 
 <hr />
 

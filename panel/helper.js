@@ -182,4 +182,141 @@ function str_to_md5(string){
 	return (md5_WordToHex(a)+md5_WordToHex(b)+md5_WordToHex(c)+md5_WordToHex(d)).toLowerCase();
 }
 
-window.str_to_md5 = str_to_md5 
+let cpp_str = `bool FileUtils::init()
+{
+	_searchPathArray.push_back(_defaultResRootPath);
+	_searchResolutionsOrderArray.push_back("");
+	setDecriptKeyAndSign("tempEncriptSign","tempEncriptKey");
+	return true;
+}
+
+void FileUtils::setDecriptKeyAndSign(std::string sign, std::string key)
+{
+	this->decriptSign = sign;
+	this->decriptKey = key;
+}
+
+void FileUtils::purgeCachedEntries()
+{
+	_fullPathCache.clear();
+}
+
+std::string FileUtils::getStringFromFile(const std::string& filename)
+{
+	std::string s;
+	getContents(filename, &s);
+	if (s.length() > decriptSign.size() && s.find(decriptSign.c_str()) == 0) {
+		s.erase(0, decriptSign.size());
+		int kindex = 0;
+		for (int i = 0; i < s.length(); i++) {
+			if (kindex >= decriptKey.size()) kindex = 0;
+			s[i] ^= decriptKey[kindex];
+			kindex++;
+		}
+	}
+	return s;
+}
+
+Data FileUtils::getDataFromFile(const std::string& filename)
+{
+	Data d;
+	getContents(filename, &d);
+	if (d.getSize() > 4) {
+		unsigned char* bytes = d.getBytes();
+		if (memcmp(bytes, decriptSign.c_str(), decriptSign.size()) == 0) {
+			ssize_t realSize = d.getSize() - decriptSign.size();
+			unsigned char* data = (unsigned char*)calloc(1, realSize);
+			memcpy(data, bytes + decriptSign.size(), realSize);
+			int kindex = 0;
+			for (int i = 0; i < realSize; i++) {
+				if (kindex >= decriptKey.size()) kindex = 0;
+				data[i] ^= decriptKey[kindex];
+				kindex++;
+			}
+			d.fastSet(data, realSize);
+		}
+	}
+	return d;
+}
+
+
+FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableBuffer* buffer)`
+
+let h_str = `virtual void valueVectorCompact(ValueVector& valueVector);
+
+	std::string decriptSign = "sign";
+	std::string decriptKey = "key";
+
+	public:
+	void setDecriptKeyAndSign(std::string sign = "",std::string key = "");
+};
+
+// end of support group
+/** @} */
+
+NS_CC_END
+
+#endif    // __CC_FILEUTILS_H__`
+
+let engine_str = `function _getRealPath(path) {
+  let excludeChangeNameList = [".js",".jsc"];
+  if(path.indexOf("assets")!=0){
+	return path
+  }
+  for(let ext of excludeChangeNameList){
+    if(path.endsWith(ext)){
+		return path
+	}
+  }
+  var arr = path.split('/');
+  let name = arr[arr.length-1];
+  let realName = helper.str_to_md5(name)
+  let realPath = path.replace(name,"")+realName
+  // console.log("_getRealPath----------->>>>>>>>>>>",path,"--->>",realPath)
+  return realPath
+};
+
+
+function transformUrl(url, options) {
+  var inLocal = false;
+  var inCache = false;
+
+  if (REGEX.test(url)) {
+	if (options.reload) {
+	  return {
+		url: url
+	  };
+	} else {
+	  var cache = cacheManager.getCache(url);
+
+	  if (cache) {
+		inCache = true;
+		url = cache;
+	  }
+	}
+  } else {
+	inLocal = true;
+	url = _getRealPath(url)
+  }
+
+  return {
+	url: url,
+	inLocal: inLocal,
+	inCache: inCache
+  };
+}
+
+function doNothing(content, options, onComplete) {`
+
+
+
+if(window){
+	let helper = {}
+	helper.str_to_md5 = str_to_md5;
+	helper.cpp_str = cpp_str;
+	helper.h_str = h_str;
+	helper.engine_str = engine_str;
+
+	window.helper = helper
+}
+
