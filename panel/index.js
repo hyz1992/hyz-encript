@@ -17,6 +17,8 @@ let jsb_linkPath = "";
 
 let recordPath = "";
 
+let encriptFinishNum = 0;
+
 // panel/index.js, this filename needs to match the one registered in package.json
 Editor.Panel.extend({
   // css style for panel
@@ -98,8 +100,10 @@ Editor.Panel.extend({
     let srcPath = Path.join(jsb_linkPath,"src")
     let mainJsPath = Path.join(jsb_linkPath,"main.js")
 
-    Editor.log("hyz-encript 加密开始",encript_ignore_extList)
+    Editor.log("hyz-encript 加密开始",encript_ignore_extList,"nameMd5Sign",nameMd5Sign)
 
+    encriptFinishNum = 0;
+    
     copyHelper();
     insertToJsEngineJs();
     insertToFileUtils();
@@ -117,7 +121,7 @@ Editor.Panel.extend({
     }
     Fs.writeFileSync(recordPath,JSON.stringify(record))
 
-    Editor.log("hyz-encript 加密完成")
+    Editor.log(`hyz-encript 加密完成,共${encriptFinishNum}项`)
   }
 });
 
@@ -158,6 +162,7 @@ function changeName(filePath) {
   }
   let name = Path.basename(filePath);//文件名
   let ret = filePath.replace(name,helper.str_to_md5(name+nameMd5Sign));
+
   return ret;
 }
 
@@ -167,13 +172,13 @@ function encodeFile(filePath) {
   if(encript_ignore_extList.indexOf(ext)>=0){
     return;
   }
-  let newPath = changeName(filePath)
   
   if(checkIsEncripted(filePath)){
-    Editor.log("已经加密过",filePath)
+    // Editor.log("已经加密过",filePath)
     return
   }
-  Editor.log("-------加密",filePath,newPath);
+  let newPath = changeName(filePath)
+  // Editor.log("-------加密",filePath,newPath);
   let sign = Buffer.from(encriptSign)
   let key = strToBytes(encriptKey)
   let buffer = Buffer.from(Fs.readFileSync(filePath));
@@ -194,6 +199,7 @@ function encodeFile(filePath) {
   }
   Fs.unlinkSync(filePath)
   Fs.writeFileSync(newPath,outBuffer)
+  encriptFinishNum = encriptFinishNum + 1
 }
 
 function checkIsEncripted(filePath) {
@@ -233,7 +239,8 @@ function decodeFile(filePath){
 
 function encriptDir(dirName) {
   if (!Fs.existsSync(dirName)) {
-      throw new Error(`${dirName} 目录不存在`);
+      Editor.log(`${dirName} 目录不存在`)
+      return
   }
   let files = Fs.readdirSync(dirName);
   files.forEach((fileName) => {
@@ -280,6 +287,7 @@ function insertToJsEngineJs() {
   }
 
   let str = helper.engine_str.replace(`let excludeChangeNameList = [".js",".jsc"];`,`let excludeChangeNameList = [${fillStr}]`)
+  str = str.replace("let realName = helper.str_to_md5(name)",`let realName = helper.str_to_md5(name+"${nameMd5Sign}")`)
   let newStr = arr_1[0]+str+arr_2[1];
   Fs.writeFileSync(jsEnjinePath,newStr);
 }
@@ -292,10 +300,10 @@ function insertToFileUtils() {
   let CCFileUtils_h = Path.join(cocosPlatformPath,"CCFileUtils.h")
   let CCFileUtils_cpp = Path.join(cocosPlatformPath,"CCFileUtils.cpp")
 
-  {
+  do{
     let hStr = Fs.readFileSync(CCFileUtils_h,'utf8');
     if(hStr.indexOf("setDecriptKeyAndSign")>=0){
-      return;
+      break;
     }
     let arr_1 = hStr.split("virtual void valueVectorCompact(ValueVector& valueVector);");
     let arr_2 = hStr.split("#endif    // __CC_FILEUTILS_H__");
@@ -311,13 +319,13 @@ function insertToFileUtils() {
     Fs.writeFileSync(CCFileUtils_h+".temp",newStr);
     Fs.copyFile(CCFileUtils_h+".temp",CCFileUtils_h,function (err) {if(err){Editor.log(err)}})
     Fs.unlinkSync(CCFileUtils_h+".temp")
-  }
+  }while(false)
 
-  {
+  do{
     let keyLine = `setDecriptKeyAndSign("${encriptSign}","${encriptKey}");`
     let cppStr = Fs.readFileSync(CCFileUtils_cpp,'utf8');
     if(cppStr.indexOf(keyLine)>=0){
-      return;
+      break;
     }
     let arr_1 = cppStr.split("bool FileUtils::init()")
     let arr_2 = cppStr.split("FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableBuffer* buffer)")
@@ -334,5 +342,5 @@ function insertToFileUtils() {
     Fs.writeFileSync(CCFileUtils_cpp+".temp",newStr);
     Fs.copyFile(CCFileUtils_cpp+".temp",CCFileUtils_cpp,function (err) {if(err){Editor.log(err)}})
     Fs.unlinkSync(CCFileUtils_cpp+".temp")
-  }
+  }while(false)
 }
