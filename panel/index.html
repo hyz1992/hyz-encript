@@ -3,33 +3,21 @@
 <div class="layout vertical" > 
     <h2>配置面板</h2>
 </div>
-<hr />
+
+<div class="section">
+    <h3>构建选项</h3>
+    <ui-prop name="构建方式" id="buildType" type="enum" value="0" tooltip="决定加密目录">
+        <option value="0">web-desktop</option>
+        <option value="1">web-mobile</option>
+        <option value="2">jsb-link</option>
+    </ui-prop>
+    <ui-prop name="加密目录" id="buildFloder" readonly type="string" value="kkk"></ui-prop>
+    <ui-prop name="加密签名" id="input_encriptSign" type="string" value="sign_123"></ui-prop>
+    <ui-prop name="加密密钥" id="input_encriptKey" type="string" value="key_456"></ui-prop>
+    <ui-prop name="开启文件名混淆" id="needMixFilename" type="boolean" value=false></ui-prop>
+    <ui-prop name="文件名混淆签名" id="input_nameMixSign" disabled type="string" value="" tooltip="跟原文件名一起算md5码"></ui-prop>
+</div>
 
 <div class="layout vertical" > 
-    <h3>构建目录</h3>
-    <ui-input id="input_buildFloder" placeholder="输入jsb-link地址 如：E:/tmp/xxx/jsb-link" class="inputstyle"></ui-input>
+    <ui-button class="okstyle" id='btn' >加密</ui-button>
 </div>
-
-<div class="layout vertical">
-    <h3>加密签名</h3> 
-    <ui-input id="input_encriptSign" placeholder="加密签名 如：my_cocos_sign_123" class="inputstyle"></ui-input>
-</div>
-<div class="layout vertical">
-    <h3>加密密钥</h3> 
-    <ui-input id="input_encriptKey" placeholder="加密秘钥 如：my_cocos_key_456" class="inputstyle"></ui-input>
-</div>
-<div class="layout vertical">
-    <h3>文件名混淆签名</h3> 
-    <ui-input id="input_changeNameSign" placeholder="文件名混淆签名 可不填" class="inputstyle"></ui-input>
-</div>
-<div class="layout vertical">
-    <h3>加密排除后缀</h3> 
-    <ui-input id="input_excludeList" placeholder="需要排除的文件后缀，以英文逗号‘,’隔开，比如 .json;.zip;.bin" class="inputstyle" ></ui-input>
-</div> 
-
-<hr />
-
-<div class="layout vertical" > 
-    <ui-button class="okstyle" id='btn' v-on:confirm="oDoEncrypt">加密</ui-button>
-</div>
-

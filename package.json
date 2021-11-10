@@ -13,11 +13,11 @@
     "main": "panel/index.js",
     "type": "dockable",
     "title": "hyz-encript",
-    "width": 680,
-    "height": 520,
-    "min-width": 680,
-    "min-height": 520,
-    "max-width": 680,
-    "max-height": 520
+    "width": 600,
+    "height": 400,
+    "min-width": 600,
+    "min-height": 400,
+    "max-width": 600,
+    "max-height": 400
   }
 }

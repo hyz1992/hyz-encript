@@ -1,7 +1,12 @@
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
 h2 {
     color: #f90;
     font-size: 15px;
-    width: 680px;
+    width: 600px;
     text-align: center
 }
 .middle {
@@ -12,12 +17,9 @@ h2 {
     width: 600px;
 }
 .okstyle {
-    margin-top: 20px;
-    margin-left: 300px;
+    margin-top: 100px;
+    margin-left: 250px;
     width: 100px;
     color: #f90;
     text-align: center;
-}
-.selectstyle {
-    width: 200px;
 }
