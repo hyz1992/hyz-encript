@@ -1,5 +1,7 @@
 # hyz-encript
 cocoscreator加密混淆，基于2.4.5编写，理论上适用于引擎2.4.0-2.4.6，最重要是开源。
+![截图](https://user-images.githubusercontent.com/11954247/141231612-5fe82cd1-a27a-4f16-ae22-d299c13b17a0.png)
+
 
 功能：
 - **web端**支持加密图片、text、json
