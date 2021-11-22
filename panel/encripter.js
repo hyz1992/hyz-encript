@@ -189,7 +189,7 @@ module.exports = class Tools{
             md5+=ext;
 
             ret = ret.replace(name.slice(0,2)+"/"+name,md5.slice(0,2)+"/"+md5);
-            ret = filePath.replace(name.slice(0,2)+"\\"+name,md5.slice(0,2)+"\\"+md5);
+            ret = ret.replace(name.slice(0,2)+"\\"+name,md5.slice(0,2)+"\\"+md5);
             let dir = Path.dirname(ret);
 
             if(!Fs.existsSync(dir)){
